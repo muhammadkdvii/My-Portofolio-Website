@@ -1,16 +1,24 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HireController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Ubah route more-Services untuk memanggil method 'moreServices' di controller
 Route::get('/more-Services', [HomeController::class, 'moreServices'])->name('moreServices');
+
+Route::post('/hire', [HireController::class, 'store'])->name('hire.store');
+
+Route::get('/download-cv', function () {
+    return response()->download(public_path('assets1/cv/(CV) Muhammad Kadavi.pdf'));
+})->name('download.cv');
 
 
 Route::get('/login', function () {
@@ -21,24 +29,16 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['auth'])->group(function () {
-    // Dashboard routes
-    Route::get('/dashboard', function () {
-        return view('dashboard.index');
-    })->name('dashboard.index');
+    // Route untuk Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('/dashboard-skill', function () {
-        return view('dashboard.skill');
-    })->name('dashboard.skill');
+// Route untuk Menampilkan dan Mengelola Data Hire
+Route::get('/hire/create', [HireController::class, 'create'])->name('hire.create');
+Route::get('/hire/{id}/edit', [HireController::class, 'edit'])->name('hire.edit');
+Route::put('/hire/{id}', [HireController::class, 'update'])->name('hire.update');
+Route::delete('/hire/{id}', [HireController::class, 'destroy'])->name('hire.destroy');
 
-    Route::get('/dashboard-service', function () {
-        return view('dashboard.service');
-    })->name('dashboard.service');
-
-    Route::get('/dashboard-portofolio', function () {
-        return view('dashboard.portofolio');
-    })->name('dashboard.portofolio');
-
-        // Portofolio routes
+            // Portofolio routes
         Route::prefix('dashboard-portofolio')->group(function () {
             Route::get('/', [PortofolioController::class, 'index'])->name('dashboard.portofolio');
             Route::get('/create', [PortofolioController::class, 'create'])->name('dashboard.page-editable.portofolio.tambah');

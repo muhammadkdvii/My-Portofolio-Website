@@ -18,6 +18,7 @@
     <!-- Login Card -->
     <div class="relative bg-white border border-gray-300 rounded-lg p-8 w-96 transition-all duration-300 ease-in-out focus-within:border-custom-teal focus-within:shadow-glow-teal1 z-10">
         <!-- Centered Content -->
+        <a href="{{ route('home')}}">
         <div class="flex items-center justify-center space-x-3 mb-6">
             <!-- Icon with Initial -->
             <div class="bg-green-500 text-white rounded-full h-10 w-10 flex items-center justify-center text-lg font-bold">
@@ -25,7 +26,9 @@
             </div>
             <!-- Title -->
             <p class="font-semibold text-xl"><span class="text-custom-teal">KDVII</span> <span class="text-gray-300">- Dashboard</span></p>
+        
         </div>
+    </a>
 
         <form action="{{ route('login.post') }}" method="POST">
             @csrf

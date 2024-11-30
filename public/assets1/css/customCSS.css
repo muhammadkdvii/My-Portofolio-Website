@@ -1,0 +1,13 @@
+/* Animasi putar centang */
+@keyframes spin-checkmark {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin-checkmark 1s ease-in-out;
+}

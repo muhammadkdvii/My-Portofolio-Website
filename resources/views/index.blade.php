@@ -19,6 +19,20 @@
   <div class="absolute w-[500px] h-[500px] bg-custom-teal/10 rounded-full blur-[250px] bottom-20 right-10"></div>
   <div class="absolute w-[300px] h-[300px] bg-custom-teal/20 rounded-full blur-[150px] top-40 right-40"></div>
  
+  @if (session('success'))
+        <div id="successModalHire" class="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 hidden z-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full text-center">
+                <div class="text-green-500 text-7xl mb-4">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 class="text-lg font-semibold">{{ session('success') }}</h3>
+                <div class="mt-4">
+                    <button onclick="closeModalSuccess()" class="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition">Close</button>
+
+                </div>
+            </div>
+        </div>
+    @endif
 
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
@@ -35,19 +49,69 @@
             
             <!-- Buttons -->
             <div class="flex space-x-4">
-            <a href="#" class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition">Hire Me</a>
-            <a href="#" class="border border-green-500 text-green-500 px-6 py-2 rounded-full hover:bg-gradient-custom hover:text-white transition">Download CV</a>
+                <a class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition" onclick="openModalHire()">Hire Me</a>
+
+                <a href="{{ route('download.cv') }}" class="border border-green-500 text-green-500 px-6 py-2 rounded-full hover:bg-gradient-custom hover:text-white transition">Download CV</a>
+
             </div>
         </div>
 
         <!-- Image -->
-        <div class="md:w-1/2 relative mt-10">
+        <div class="md:w-1/2 relative mt-10 z-0">
             <img src="{{ asset('assets1/img/saya.png')}}" alt="Muhammad Kadavi">
         </div>
     
 
-        </div>
+   
+
     </section>    
+
+     <!-- Modal -->
+<div id="hireModal" class="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold">Hire Me</h3>
+            <button onclick="closeModalHire()" class="text-gray-500 hover:text-gray-700">&times;</button>
+        </div>
+
+        <form action="{{ route('hire.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+        
+            <!-- Nama Perusahaan -->
+            <div class="mb-4">
+                <label for="nama_perusahaan" class="block text-sm font-medium text-gray-700">Nama Perusahaan</label>
+                <input type="text" id="nama_perusahaan" name="nama_perusahaan" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                @error('nama_perusahaan')
+                    <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+        
+            <!-- Email Perusahaan -->
+            <div class="mb-4">
+                <label for="email_perusahaan" class="block text-sm font-medium text-gray-700">Email Perusahaan</label>
+                <input type="email" id="email_perusahaan" name="email_perusahaan" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                @error('email_perusahaan')
+                    <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+        
+            <!-- Formulir -->
+            <div class="mb-4">
+                <label for="formulir" class="block text-sm font-medium text-gray-700">Formulir</label>
+                <input type="file" id="formulir" name="formulir" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                @error('formulir')
+                    <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+        
+            <!-- Submit Button -->
+            <div class="flex justify-end">
+                <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition">Kirim</button>
+            </div>
+        </form>
+        
+    </div>
+</div>
 
     
   <!-- My Services Section -->
@@ -163,67 +227,68 @@
 
 
 
-    <!-- Portfolio Section -->
-    <section id="porto" class="py-16">
-            <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white">PORTOFOLIO</h2>
-            <p class="text-green-400 italic">Proyek Saya</p>
-            </div>
-        
-           <!-- Filter Navigation (Tabs) -->
-           <div class="flex justify-center space-x-6 mb-8">
-            <button onclick="filterCategory('semua')" id="semua-tab" class="tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-teal-700 border-teal-700">SEMUA</button>
-            <button onclick="filterCategory('ui/ux')" id="ui-ux-tab" class="tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600">DESAIN UI/UX</button>
-            <button onclick="filterCategory('fotografi')" id="fotografi-tab" class="tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600">FOTOGRAFI</button>
-            <button onclick="filterCategory('website')" id="website-tab" class="tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600">WEBSITE</button>
-            <button onclick="filterCategory('videografi')" id="videografi-tab" class="tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600">VIDEOGRAFI</button>
-            <button onclick="filterCategory('lainnya')" id="lainnya-tab" class="tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600">LAINNYA</button>
-        </div>
-        
-        
+  
+ <!-- Portfolio Section -->
+<section id="porto" class="py-16">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-white">PORTOFOLIO</h2>
+        <p class="text-green-400 italic">Proyek Saya</p>
+    </div>
 
-        <div id="portfolio-container" class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-0">
-            @foreach ($portofolios as $item)
-            <div class="portofolio-item" data-kategori="{{ $item->kategori }}" style="display: block;">
-                <div class="bg-custom-dark-2 rounded-lg overflow-hidden shadow-lg">
-                    <img src="{{ Storage::url($item->foto) }}" alt="{{ $item->nama_portofolio }}" class="bg-gray-700 h-48">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-white">{{ $item->nama_portofolio }}</h3>
-                        <p class="text-gray-400 mt-2">{{ $item->deskripsi }}</p>
-                        <a href="{{ $item->link_portofolio }}" class="text-green-400 mt-4 inline-block hover:underline">Lihat Selengkapnya →</a>
-                    </div>
+    <!-- Filter Navigation (Tabs) -->
+    <div class="flex justify-center space-x-6 mb-8">
+        <button onclick="filterCategory('semua')" id="semua-tab" class="hover:text-teal-700 tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-teal-700 border-teal-700">SEMUA</button>
+        <button onclick="filterCategory('ui-ux')" id="ui-ux-tab" class="tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600 hover:text-teal-700 hover:border-teal-700">DESAIN UI/UX</button>
+        <button onclick="filterCategory('fotografi')" id="fotografi-tab" class="hover:text-teal-700 tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600">FOTOGRAFI</button>
+        <button onclick="filterCategory('website')" id="website-tab" class="hover:text-teal-700 tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600">WEBSITE</button>
+        <button onclick="filterCategory('videografi')" id="videografi-tab" class="hover:text-teal-700 tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600">VIDEOGRAFI</button>
+        <button onclick="filterCategory('lainnya')" id="lainnya-tab" class="hover:text-teal-700 tab-button px-4 py-2 font-semibold rounded-t-lg focus:outline-none text-gray-600">LAINNYA</button>
+    </div>
+
+    <!-- Portfolio Items -->
+    <div id="portfolio-container" class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-0">
+        @foreach ($portofolios as $item)
+        <div class="portofolio-item" data-kategori="{{ $item->kategori }}" style="display: block;">
+            <div class="bg-custom-dark-2 rounded-lg overflow-hidden shadow-lg">
+                <img src="{{ Storage::url($item->foto) }}" alt="{{ $item->nama_portofolio }}" class="bg-gray-700 h-48">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-white">{{ $item->nama_portofolio }}</h3>
+                    <p class="text-gray-400 mt-2">{{ $item->deskripsi }}</p>
+                    <a href="{{ $item->link_portofolio }}" class="text-green-400 mt-4 inline-block hover:underline">Lihat Selengkapnya →</a>
                 </div>
             </div>
-            @endforeach
         </div>
-        
+        @endforeach
+    </div>
+</section>
 
-    </section>
 
-    <script>
-        function filterCategory(kategori) {
-            // Update warna tombol yang aktif
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('text-teal-700', 'border-teal-700');
-                button.classList.add('text-gray-600');
-            });
-    
-            let activeTab = document.getElementById(kategori + '-tab');
-            activeTab.classList.add('text-teal-700', 'border-teal-700');
-            activeTab.classList.remove('text-gray-600');
-    
-            // Ambil portofolio yang sesuai dengan kategori
-            let portofolios = document.querySelectorAll('.portofolio-item');
-    
-            portofolios.forEach(item => {
-                if (kategori === 'semua' || item.dataset.kategori === kategori) {
-                    item.style.display = 'block'; // Tampilkan item yang sesuai
-                } else {
-                    item.style.display = 'none'; // Sembunyikan item yang tidak sesuai
-                }
-            });
+<!-- Success Modal and Animation -->
+<script>
+    window.onload = function() {
+        // Check if the success session exists
+        if ('{{ session('success') }}') {
+            // Show the success modal
+            document.getElementById('successModalHire').classList.remove('hidden');
+            // Add animation for the checkmark icon
+            let checkIcon = document.getElementById('checkIcon');
+            checkIcon.classList.add('animate__animated', 'animate__pulse');
         }
-    </script>
+    };
+
+    function closeModalSuccess() {
+        document.getElementById('successModalHire').classList.add('hidden');
+    }
+
+    function openModalHire() {
+        document.getElementById('hireModal').classList.remove('hidden');
+    }
+
+    function closeModalHire() {
+        document.getElementById('hireModal').classList.add('hidden');
+    }
+</script>
+
     
     
 @endsection

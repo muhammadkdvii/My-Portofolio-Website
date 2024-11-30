@@ -15,6 +15,7 @@ class SkillController extends Controller
     }
 
 
+
     // Tampilkan halaman tambah skill
     public function create()
     {

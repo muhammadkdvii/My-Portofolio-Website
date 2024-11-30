@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_service'); // nama_service (string)
             $table->string('sub_nama_service'); // sub_nama_service (string)
             $table->text('deskripsi'); // deskripsi (text)
-            $table->decimal('harga', 10, 2); // harga (decimal, 10 digit total, 2 digit setelah koma)
+            $table->decimal('harga', 15, 2); // harga (decimal, 10 digit total, 2 digit setelah koma)
             $table->timestamps(); // created_at dan updated_at
         });
     }

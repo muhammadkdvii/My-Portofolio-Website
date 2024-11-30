@@ -50,7 +50,7 @@ class ServiceController extends Controller
             'nama_service' => 'required|string|max:255',
             'sub_nama_service' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'harga' => 'required|numeric|min:0|max:100000',
+            'harga' => 'required|numeric|min:0',    
         ]);
 
         $service = Service::findOrFail($id);

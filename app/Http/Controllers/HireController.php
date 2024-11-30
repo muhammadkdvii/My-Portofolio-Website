@@ -1,64 +1,52 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Hire;
+use Illuminate\Support\Facades\Storage;
 
 class HireController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(Request $request)
     {
-        //
+        // Validate the form inputs
+        $request->validate([
+            'nama_perusahaan' => 'required|string|max:255',
+            'email_perusahaan' => 'required|email',
+            'formulir' => 'required|file|mimes:pdf,docx,doc|max:2048',
+        ]);
+
+        // Handle file upload
+        $formulirPath = $request->file('formulir')->store('formulirs', 'public');
+
+        // Create the Hire record
+        Hire::create([
+            'nama_perusahaan' => $request->nama_perusahaan,
+            'email_perusahaan' => $request->email_perusahaan,
+            'formulir' => $formulirPath,
+        ]);
+
+        // Redirect back to the index with success and new hire data
+        return redirect()->route('home')->with([
+            'success' => 'Data hired successfully!',
+            'newHire' => [
+                'nama_perusahaan' => $request->nama_perusahaan,
+                'email_perusahaan' => $request->email_perusahaan,
+                'formulir' => $formulirPath,
+            ]
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy($id)
     {
-        //
-    }
+        $hire = Hire::findOrFail($id);
+        // Delete file from storage
+        Storage::delete($hire->formulir);
+        // Delete record from database
+        $hire->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('dashboard.index')->with('success', 'Record deleted successfully.');
     }
 }

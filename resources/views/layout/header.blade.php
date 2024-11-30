@@ -13,14 +13,14 @@
         <div class="hidden md:flex space-x-8">
           <a href="{{ route ('home')}}" class="hover:text-custom-teal">Home</a>
           <a href="#about" class="hover:text-custom-teal">About Me</a>
-          <a href="#" class="hover:text-custom-teal">Contact</a>
+          <a href="https://wa.me/088290954001" class="hover:text-custom-teal">Contact</a>
           <a href="#porto" class="hover:text-custom-teal">Project</a>
           <a href="#service" class="hover:text-custom-teal">Service</a>
         </div>
 
         <!-- Donate Button -->
         <div>
-          <a href="#" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-gradient-custom transition">Donate</a>
+          <a href="https://saweria.co/widgets/qr?streamKey=761859e40822a2d0df6bd92e4260ece5" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-gradient-custom transition">Donate</a>
         </div>
       </div>
     </div>

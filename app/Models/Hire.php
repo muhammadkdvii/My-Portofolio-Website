@@ -14,6 +14,9 @@ class Hire extends Model
      *
      * @var array<int, string>
      */
+
+     protected $table = 'hire'; // Nama tabel sesuai di database (singular)
+
     protected $fillable = [
         'nama_perusahaan',  // Nama perusahaan
         'email_perusahaan', // Email perusahaan
