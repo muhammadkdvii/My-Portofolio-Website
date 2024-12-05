@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function index()
 {
-    // Fetch the required data for the dashboard
+  
     $skillsCount = Skill::count();
     $serviceCount = Service::count();
     $portfolioCount = Portofolio::count();
@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
     $hires = Hire::all();
     
-    // Pass data to the view
+   
     return view('dashboard.index', compact('skillsCount', 'serviceCount', 'portfolioCount', 'hireCount', 'hires'));
 }
 

@@ -10,14 +10,10 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil data skill dan service
         $skills = Skill::inRandomOrder()->take(6)->get();
         $services = Service::inRandomOrder()->take(3)->get();
     
-        // Menangani kategori untuk Portofolio
-        $kategori = $request->get('kategori', 'semua'); // default 'semua' untuk menampilkan semua kategori
-    
-        // Filter portofolio berdasarkan kategori yang dipilih
+        $kategori = $request->get('kategori', 'semua');
         if ($kategori === 'semua') {
             $portofolios = Portofolio::inRandomOrder()->take(9)->get(); // Menampilkan 9 portofolio secara acak
         } else {
@@ -30,10 +26,10 @@ class HomeController extends Controller
     
     public function moreServices()
     {
-        // Ambil data service untuk halaman 'moreServices'
-        $services = Service::all(); // Ambil semua services
+        
+        $services = Service::all(); 
 
-        // Kirim data ke view 'moreServices'
+      
         return view('moreServices', compact('services'));
     }
 }

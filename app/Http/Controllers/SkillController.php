@@ -7,7 +7,7 @@ use App\Models\Skill;
 
 class SkillController extends Controller
 {
-    // Tampilkan semua skill
+  
     public function index()
     {
         $skills = Skill::all();
@@ -16,13 +16,13 @@ class SkillController extends Controller
 
 
 
-    // Tampilkan halaman tambah skill
+  
     public function create()
     {
         return view('dashboard.page-editable.skill.tambah');
     }
 
-    // Simpan skill baru
+   
     public function store(Request $request)
     {
         $request->validate([
@@ -40,14 +40,14 @@ class SkillController extends Controller
         return redirect()->route('dashboard.skill')->with('success', 'Skill berhasil ditambahkan!');
     }
 
-    // Tampilkan halaman edit skill
+  
     public function edit($id)
     {
         $skill = Skill::findOrFail($id); // Cari skill berdasarkan ID
         return view('dashboard.page-editable.skill.edit', compact('skill'));
     }
 
-    // Perbarui skill
+   
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -62,7 +62,7 @@ class SkillController extends Controller
         return redirect()->route('dashboard.skill')->with('success', 'Skill berhasil diperbarui!');
     }
 
-    // Hapus skill
+  
     public function destroy($id)
     {
         $skill = Skill::findOrFail($id);
@@ -71,10 +71,10 @@ class SkillController extends Controller
         return redirect()->route('dashboard.skill')->with('success', 'Skill berhasil dihapus!');
     }
 
-    // Tampilkan satu data skill
+   
     public function show($id)
     {
-        $skill = Skill::findOrFail($id); // Cari skill berdasarkan ID
+        $skill = Skill::findOrFail($id);
         return view('dashboard.page-editable.skill.lihat', compact('skill'));
     }
 }

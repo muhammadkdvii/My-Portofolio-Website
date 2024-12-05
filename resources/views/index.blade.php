@@ -127,7 +127,7 @@
             <div class="bg-custom-dark-2 rounded-lg p-6 shadow-lg">
                 <h3 class="text-sm uppercase text-gray-400">{{ $service->sub_nama_service }}</h3>
                 <h4 class="text-2xl font-semibold text-white">{{ $service->nama_service }}</h4>
-                <p class="text-gray-400 mt-4">{{ $service->deskripsi }}</p>
+                <p class="text-gray-400 mt-4 line-clamp-3">{{ $service->deskripsi }}</p>
                 
                 <!-- Button for opening the modal -->
                 <a href="javascript:void(0);" class="text-green-400 mt-4 inline-block hover:underline"
@@ -253,7 +253,7 @@
                 <img src="{{ Storage::url($item->foto) }}" alt="{{ $item->nama_portofolio }}" class="bg-gray-700 h-48">
                 <div class="p-6">
                     <h3 class="text-xl font-semibold text-white">{{ $item->nama_portofolio }}</h3>
-                    <p class="text-gray-400 mt-2">{{ $item->deskripsi }}</p>
+                    <p class="text-gray-400 mt-2 line-clamp-3">{{ $item->deskripsi }}</p>
                     <a href="{{ $item->link_portofolio }}" class="text-green-400 mt-4 inline-block hover:underline">Lihat Selengkapnya →</a>
                 </div>
             </div>
